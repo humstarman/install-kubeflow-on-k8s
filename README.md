@@ -4,43 +4,19 @@
 * ansible
 * kubernetes
 * ksonnet 
-<div>
-and, the installation of ksonnet can be implemeted as:
-</div>
-<div>
-1. download binary file from github
-</div>
-<div>
-2. unzip and cp the binary file to $PATH
-</div>
+---
+## 1 Set the parameters in `Makefile` 
+* APP_NAME: the name of this deployment
+* NAMESPACE: the namespace of this deployment
 
 ---
-## 1 Generate my-kubeflow directory
-	run:
-```console
-./init.sh
+## 2 Install
+run:
+```
+make install
 ```
 
----
-## 2 Prepare images
-	for some reasons, one can not get images directly.
-
----
-## 3 Pull the images and rename
-	run:
-```console
-./pull-go-images.sh
-```
-
----
-## 4 deploy tensorflow on kubernetes
-1. cd to my-kubeflow directory
-2. run:
-```console
-./run.sh
-```
-
-## 5 example
+## 3 example
 ```bash
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
