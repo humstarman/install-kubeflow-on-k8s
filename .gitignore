@@ -1,3 +1,4 @@
 *.swp
 *.tar.gz
 ks_*_linux_amd64
+tmp.log

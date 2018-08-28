@@ -1,13 +1,14 @@
 SHELL=/bin/bash
-KSONNET_VER=0.12.0
-KUBEFLOW_VER=v0.1.2
-NAMESPACE=kubeflow
 APP_NAME=my-kubeflow
+NAMESPACE=kubeflow
 LOCAL_REGISTRY_IP=10.254.0.50
 LOCAL_REGISTRY_PORT=5000
-LOCAL_REGISTRY=${LOCAL_REGISTRY_IP}:${LOCAL_REGISTRY_PORT}
-PUBLIC_DOCKER_HUB=lowyard
 ANSIBLE_GROUP=k8s
+PUBLIC_DOCKER_HUB=lowyard
+KSONNET_VER=0.12.0
+KUBEFLOW_VER=v0.1.2
+LOCAL_REGISTRY=${LOCAL_REGISTRY_IP}:${LOCAL_REGISTRY_PORT}
+INGRESS_NAME=${APP_NAME}
 
 all: deploy-ks config get-image deploy-kubeflow
 install: all
@@ -29,3 +30,13 @@ deploy-kubeflow:
 clean:
 	@ks delete ${APP_NAME}
 	@kubectl delete -namespace ${NAMESPACE}
+
+cp:
+	@find ./manifests -type f -name "*.sed" | sed s?".sed"?""?g | xargs -I {} cp {}.sed {}
+
+sed:
+	@find ./manifests -type f -name "*.yaml" | xargs sed -i s?"{{.name}}"?"${INGRESS_NAME}"?g
+	@find ./manifests -type f -name "*.yaml" | xargs sed -i s?"{{.namespace}}"?"${NAMESPACE}"?g
+
+deploy-ingress: cp sed
+	@kubectl create -f ./manifests/.
