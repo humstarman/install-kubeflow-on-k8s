@@ -59,20 +59,22 @@ GROUP=${GROUP:-"all"}
 LOCAL_REGISTRY_PORT=${LOCAL_REGISTRY_PORT:-"5000"}
 LOCAL_REPO=${LOCAL_REGISTRY_IP}:${LOCAL_REGISTRY_PORT}
 if [ -z "$IMAGES" ]; then
-  IMAGES="k8s.gcr.io/hyperkube:v1.0.7 \
-  gcr.io/kubeflow-images-public/tf-model-server-http-proxy:v20180327-995786ec \
-  gcr.io/kubeflow-images-public/tf-model-server-cpu:v20180327-995786ec \
-  gcr.io/kubeflow-images-public/tf-model-server-gpu:v20180327-995786ec \
-  gcr.io/kubeflow/tf-benchmarks-cpu:v20171202-bdab599-dirty-284af3 \
-  gcr.io/kubeflow/tf-benchmarks-gpu:v20171202-bdab599-dirty-284af3 \
-  gcr.io/cloud-solutions-group/esp-sample-app:1.0.0 \
-  gcr.io/google_containers/spartakus-amd64:v1.0.0 \
-  gcr.io/kubeflow-images-public/envoy:v20180309-0fb4886b463698702b6a08955045731903a18738 \
-  gcr.io/kubeflow-images-public/tf_operator:v20180329-a7511ff \
-  gcr.io/kubeflow/jupyterhub-k8s:1.0.1 \
-  gcr.io/kubeflow-images-public/tf_operator:v20180226-403 \
-  gcr.io/kubeflow-images-public/tensorflow-1.4.1-notebook-cpu:v20180419-0ad94c4e \
-  gcr.io/kubeflow/tensorflow-notebook-cpu"
+  IMAGES="quay.io/datawire/ambassador:0.30.1 \
+  quay.io/datawire/statsd:0.30.1
+  gcr.io/kubeflow-images-public/centraldashboard:v0.2.1
+  gcr.io/kubeflow/jupyterhub-k8s:v20180531-3bb991b1
+  gcr.io/kubeflow-images-public/tf_operator:v0.2.0
+  google/cloud-sdk:alpine
+  gcr.io/cloud-solutions-group/esp-sample-app:1.0.0
+  gcr.io/google_containers/spartakus-amd64:v1.0.0
+  gcr.io/kubeflow/jupyterhub-k8s:1.0.1
+  gcr.io/kubeflow-images-public/tf_operator:v20180226-403
+  quay.io/datawire/ambassador:0.34.0
+  quay.io/datawire/statsd:0.34.0
+  quay.io/kubernetes_incubator/nfs-provisioner:v1.0.8
+  gcr.io/kubeflow-images-public/tf-model-server-http-proxy:v20180606-9dfda4f2
+  gcr.io/kubeflow-images-public/tensorflow-serving-1.7:v20180604-0da89b8a
+  gcr.io/kubeflow-images-public/tensorflow-serving-1.6gpu:v20180604-0da89b8a"
 fi
 pull_distribute_tag() {
   NAME=${IMAGE##*/}
